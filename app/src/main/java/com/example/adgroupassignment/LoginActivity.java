@@ -1,11 +1,15 @@
 package com.example.adgroupassignment;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton googleSignInBtn;
     private GoogleApiClient googleApiClient;
     private static final int REQ_SIGN_GOOGLE = 100; // request code for google login
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +49,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         findViewById(R.id.btnLogin).setOnClickListener(onClickListener);
-        findViewById(R.id.btnReg).setOnClickListener(onClickListener);
-        findViewById(R.id.gotoPWResetBtn).setOnClickListener(onClickListener);
+        findViewById(R.id.tvReg).setOnClickListener(onClickListener);
+        findViewById(R.id.tvFindPassword).setOnClickListener(onClickListener);
 //        findViewById(R.id.googleSignInBtn).setOnClickListener(onClickListener);
+
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
 
     }
 
@@ -64,15 +74,84 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.btnLogin:
                     login();
                     break;
-                case R.id.btnReg:
+                case R.id.tvReg:
                     myStartActivity(UserRegisterActivity.class);
                     break;
-//                case R.id.gotoPWResetBtn:
+                case R.id.tvFindPassword:
+                    showRecoverPasswordDialog();
 //                    myStartActivity(PasswordResetActivity.class);
 //                    break;
             }
         }
     };
+
+    private void showRecoverPasswordDialog() {
+        //AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Recover Password");
+
+        //set layout linear layout
+        LinearLayout linearLayout = new LinearLayout(this);
+        //views to set in dialog
+        final EditText emailEt = new EditText(this);
+        emailEt.setHint("Email");
+        emailEt.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        emailEt.setMinEms(16);
+
+        linearLayout.addView(emailEt);
+        linearLayout.setPadding(10,10,10,10);
+
+        builder.setView(linearLayout);
+
+        //buttons recover
+        builder.setPositiveButton("Recover", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //input email
+                String email=emailEt.getText().toString().trim();
+                beginRecovery(email);
+            }
+        });
+        //buttons cancel
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //dismiss dialog
+                dialog.dismiss();
+            }
+        });
+
+        //show dialog
+        builder.create().show();
+    }
+
+    private void beginRecovery(String email) {
+        //show progress dialog
+        progressDialog.setMessage("Sending email...");
+        progressDialog.show();
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        if(task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this,"Email sent",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                           //Toast.makeText(LoginActivity.this, "Failed",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        //get and show proper error message
+                        Toast.makeText(LoginActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void login() {
         // get email and pw
