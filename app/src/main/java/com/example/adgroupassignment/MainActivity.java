@@ -1,43 +1,141 @@
 package com.example.adgroupassignment;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    // views declartion
+    TextView tvTime, tvDuration;
+    SeekBar seekBarTime, seekBarVolume;
+    Button btnPlay;
+
+    MediaPlayer musicPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // OS가 Marshmallow 이상일 경우 권한체크를 해야 합니다.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
-            } else {
-                // READ_EXTERNAL_STORAGE 에 대한 권한이 있음.
-            }
-        }
-        // OS가 Marshmallow 이전일 경우 권한체크를 하지 않는다.
-        else{
+        // hide the actionbar
+//        getSupportActionBar().hide();
 
+        tvTime = findViewById(R.id.tvTime);
+        tvDuration = findViewById(R.id.tvDuration);
+        seekBarTime = findViewById(R.id.seekBarTime);
+        seekBarVolume = findViewById(R.id.seekBarVolume);
+        btnPlay = findViewById(R.id.btnPlay);
+
+        musicPlayer = MediaPlayer.create(this, R.raw.bad_guy);
+        musicPlayer.setLooping(true);
+        musicPlayer.seekTo(0);
+        musicPlayer.setVolume(0.5f, 0.5f);
+
+        String duration = millisecondsToString(musicPlayer.getDuration());
+        tvDuration.setText(duration);
+
+        btnPlay.setOnClickListener(this);
+
+        seekBarVolume.setProgress(50);
+        seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean isFromUser) {
+                float volume = progress / 100f;
+                musicPlayer.setVolume(volume,volume);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        seekBarTime.setMax(musicPlayer.getDuration());
+        seekBarTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean isFromUser) {
+                if(isFromUser) {
+                    musicPlayer.seekTo(progress);
+                    seekBar.setProgress(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (musicPlayer != null) {
+                    if(musicPlayer.isPlaying()) {
+                        try {
+                            final double current = musicPlayer.getCurrentPosition();
+                            final String elapsedTime = millisecondsToString((int) current);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tvTime.setText(elapsedTime);
+                                    seekBarTime.setProgress((int) current);
+                                }
+                            });
+
+                            Thread.sleep(1000);
+                        }catch (InterruptedException e) {}
+                    }
+                }
+            }
+        }).start();
+
+    } // end main
+
+
+    public String millisecondsToString(int time) {
+        String elapsedTime = "";
+        int minutes = time / 1000 / 60;
+        int seconds = time / 1000 % 60;
+        elapsedTime = minutes+":";
+        if(seconds < 10) {
+            elapsedTime += "0";
         }
+        elapsedTime += seconds;
+
+        return  elapsedTime;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            // READ_EXTERNAL_STORAGE 에 대한 권한 획득.
+    public void onClick(View view) {
+        if(view.getId() == R.id.btnPlay) {
+            if(musicPlayer.isPlaying()) {
+                // is playing
+                musicPlayer.pause();
+                btnPlay.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
+            } else {
+                // on pause
+                musicPlayer.start();
+//                btnPlay.setBackgroundResource(R.drawable.ic_pause);
+            }
         }
     }
-
-
-
 }
