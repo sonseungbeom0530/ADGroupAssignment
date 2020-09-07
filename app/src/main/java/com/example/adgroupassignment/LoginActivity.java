@@ -196,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                        Log.e("asdfasdf",data);
 
                                         if(data.equals("User")){
-                                            myStartActivity(MainActivity.class);
+                                            myStartActivity(ListMusicActivity.class);
                                             Toast.makeText(LoginActivity.this, data + " login success", Toast.LENGTH_SHORT).show();
                                         }else if(data.equals("Admin")){
                                             myStartActivity(AdminActivity.class);

@@ -1,18 +1,22 @@
 package com.example.adgroupassignment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.io.IOException;
+
+public class MusicPlayerActivity extends AppCompatActivity implements View.OnClickListener {
 
     // views declartion
-    TextView tvTime, tvDuration;
+    TextView tvTime, tvDuration,tvTitle,tvArtist;
     SeekBar seekBarTime, seekBarVolume;
     Button btnPlay;
 
@@ -22,18 +26,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_music_player);
 
         // hide the actionbar
-//        getSupportActionBar().hide();
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        Song song=(Song)getIntent().getSerializableExtra("song");
 
         tvTime = findViewById(R.id.tvTime);
         tvDuration = findViewById(R.id.tvDuration);
         seekBarTime = findViewById(R.id.seekBarTime);
         seekBarVolume = findViewById(R.id.seekBarVolume);
         btnPlay = findViewById(R.id.btnPlay);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvArtist = findViewById(R.id.tvArtist);
 
-        musicPlayer = MediaPlayer.create(this, R.raw.bad_guy);
+        tvTitle.setText(song.getTitle());
+        tvArtist.setText(song.getArtist());
+
+        musicPlayer = new MediaPlayer();
+        try {
+            musicPlayer.setDataSource(song.getPath());
+            musicPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         musicPlayer.setLooping(true);
         musicPlayer.seekTo(0);
         musicPlayer.setVolume(0.5f, 0.5f);
@@ -137,5 +154,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                btnPlay.setBackgroundResource(R.drawable.ic_pause);
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+            if (musicPlayer.isPlaying()){
+                musicPlayer.stop();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
