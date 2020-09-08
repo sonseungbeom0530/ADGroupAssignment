@@ -1,18 +1,28 @@
 package com.example.adgroupassignment;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.io.Serializable;
 
-public class Song implements Serializable {
+public class Song  implements Serializable {
 
     private String title;
     private String artist;
     private String path;
+    private String album;
+    private String duration;
 
-    public Song(String title, String artist, String path) {
+
+    public Song(String title, String artist, String path, String album, String duration) {
+
         this.title = title;
         this.artist = artist;
         this.path = path;
+        this.album = album;
+        this.duration = duration;
     }
+
+    public Song() { }
 
     public String getTitle() {
         return title;
@@ -36,5 +46,21 @@ public class Song implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 }

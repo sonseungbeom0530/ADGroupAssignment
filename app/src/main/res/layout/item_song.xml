@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:padding="8dp">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/musicImg"
+        android:background="@drawable/ic_launcher_background"
+        android:padding="5dp"
+        />
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/musicImg"
         android:text="Song1"
         android:textColor="#fff"
-        android:textStyle="bold"
-        android:textSize="17sp"/>
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvArtist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Song1"
-        android:textColor="#fff"/>
+<!--    <TextView-->
+<!--        android:id="@+id/tvArtist"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_toEndOf="@id/tvTitle"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:text="Song1"-->
+<!--        android:textColor="#fff" />-->
 
-</LinearLayout>
+</RelativeLayout>

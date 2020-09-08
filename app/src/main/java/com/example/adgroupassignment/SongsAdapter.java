@@ -1,38 +1,77 @@
 package com.example.adgroupassignment;
 
 import android.content.Context;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class SongsAdapter extends ArrayAdapter<Song> {
+public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder> {
 
+    private Context mContext;
+    private ArrayList<Song> mFiles;
 
-    public SongsAdapter(@NonNull Context context,  @NonNull List<Song> objects) {
-        super(context, 0, objects);
-
+    public SongsAdapter(Context mContext, ArrayList<Song> mFiles) {
+        this.mContext = mContext;
+        this.mFiles = mFiles;
     }
-
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_song,null);
-
-        TextView tvTitle=convertView.findViewById(R.id.tvTitle);
-        TextView tvArtist=convertView.findViewById(R.id.tvArtist);
-
-        Song song=getItem(position);
-        tvTitle.setText(song.getTitle());
-        tvArtist.setText(song.getArtist());
-
-        return convertView;
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_song, parent, false);
+        return new MyViewHolder(view);
     }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.tvTitle.setText(mFiles.get(position).getTitle());
+        byte[] image = getAlbumArt(mFiles.get(position).getPath());
+        if(image != null){
+            Glide.with(mContext).asBitmap().load(image).into(holder.musicImg);
+        }else{
+            Glide.with(mContext).load(R.drawable.empty_albumart).into(holder.musicImg);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mFiles.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
+
+        TextView tvTitle;
+//        TextView tvArtist;
+        ImageView musicImg;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvTitle = itemView.findViewById(R.id.tvTitle);
+//            tvArtist = itemView.findViewById(R.id.tvArtist);
+            musicImg = itemView.findViewById(R.id.musicImg);
+        }
+    }
+
+    private byte[] getAlbumArt(String uri){
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(uri);
+        byte[] art = retriever.getEmbeddedPicture();
+        return art;
+    }
+
+
 }

@@ -188,27 +188,29 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 //                            loaderLayout.setVisibility(View.GONE);
                             if (task.isSuccessful()) {
-                                userID.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // Get user value
-                                        String data = dataSnapshot.child("accountType").getValue(String.class);
-//                                        Log.e("asdfasdf",data);
-
-                                        if(data.equals("User")){
-                                            myStartActivity(ListMusicActivity.class);
-                                            Toast.makeText(LoginActivity.this, data + " login success", Toast.LENGTH_SHORT).show();
-                                        }else if(data.equals("Admin")){
-                                            myStartActivity(AdminActivity.class);
-                                            Toast.makeText(LoginActivity.this, data + " login success", Toast.LENGTH_SHORT).show();
-                                        }
-
-                                    }
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                    }
-
-                                });
+                                myStartActivity(MainActivity.class);
+                                Toast.makeText(LoginActivity.this,  "Login success", Toast.LENGTH_SHORT).show();
+//                                userID.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                        // Get user value
+//                                        String data = dataSnapshot.child("accountType").getValue(String.class);
+////                                        Log.e("asdfasdf",data);
+//
+//                                        if(data.equals("User")){
+//                                            myStartActivity(MainActivity.class);
+//                                            Toast.makeText(LoginActivity.this, data + " login success", Toast.LENGTH_SHORT).show();
+//                                        }else if(data.equals("Admin")){
+//                                            myStartActivity(AdminActivity.class);
+//                                            Toast.makeText(LoginActivity.this, data + " login success", Toast.LENGTH_SHORT).show();
+//                                        }
+//
+//                                    }
+//                                    @Override
+//                                    public void onCancelled(DatabaseError databaseError) {
+//                                    }
+//
+//                                });
 
                             } else {
                                 // If login fails, display a message to the user.
