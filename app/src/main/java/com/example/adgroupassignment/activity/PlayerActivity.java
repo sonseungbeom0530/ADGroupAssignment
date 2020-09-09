@@ -34,6 +34,7 @@ import static com.example.adgroupassignment.activity.MainActivity.musicFiles;
 import static com.example.adgroupassignment.activity.MainActivity.repeatBoolean;
 import static com.example.adgroupassignment.activity.MainActivity.shuffleBoolean;
 import static com.example.adgroupassignment.adapter.AlbumDetailsAdapter.albumFiles;
+import static com.example.adgroupassignment.adapter.SongsAdapter.mFiles;
 
 public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 
@@ -345,7 +346,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         if(sender != null && sender.equals("albumDetails")){
             listSongs = albumFiles;
         }else{
-            listSongs = musicFiles;
+            listSongs = mFiles;
         }
         if (listSongs!=null){
             playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_24);

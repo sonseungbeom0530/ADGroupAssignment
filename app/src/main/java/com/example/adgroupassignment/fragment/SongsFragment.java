@@ -14,11 +14,12 @@ import com.example.adgroupassignment.R;
 import com.example.adgroupassignment.adapter.SongsAdapter;
 
 import static com.example.adgroupassignment.activity.MainActivity.musicFiles;
+import static com.example.adgroupassignment.adapter.SongsAdapter.mFiles;
 
 public class SongsFragment extends Fragment {
 
     RecyclerView recyclerView;
-    SongsAdapter songsAdapter;
+    public static SongsAdapter songsAdapter;
 
     public SongsFragment() {
         // Required empty public constructor
