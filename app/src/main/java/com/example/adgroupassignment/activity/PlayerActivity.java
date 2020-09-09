@@ -33,6 +33,7 @@ import java.util.Random;
 import static com.example.adgroupassignment.activity.MainActivity.musicFiles;
 import static com.example.adgroupassignment.activity.MainActivity.repeatBoolean;
 import static com.example.adgroupassignment.activity.MainActivity.shuffleBoolean;
+import static com.example.adgroupassignment.adapter.AlbumDetailsAdapter.albumFiles;
 
 public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 
@@ -340,11 +341,15 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
 
     private void getIntentMethod() {
         position=getIntent().getIntExtra("position",-1);
-        listSongs=musicFiles;
+        String sender = getIntent().getStringExtra("sender");
+        if(sender != null && sender.equals("albumDetails")){
+            listSongs = albumFiles;
+        }else{
+            listSongs = musicFiles;
+        }
         if (listSongs!=null){
             playPauseBtn.setImageResource(R.drawable.ic_baseline_pause_24);
             uri = Uri.parse(listSongs.get(position).getPath());
-
         }
         if (mediaPlayer != null){
             mediaPlayer.stop();

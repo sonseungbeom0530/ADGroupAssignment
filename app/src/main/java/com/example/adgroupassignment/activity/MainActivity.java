@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 1;
     public static ArrayList<Song> musicFiles;
     static boolean shuffleBoolean=false, repeatBoolean=false;
+    public static ArrayList<Song> albums = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static ArrayList<Song> getAllSongs(Context context){
+        ArrayList<String> duplicate = new ArrayList<>();
         ArrayList<Song> songArrayList = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
@@ -131,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
                 Song songs = new Song(title, artist, path, album, duration,id);
                 Log.e("Path : " + path, "album : " + album);
                 songArrayList.add(songs);
+                if(!duplicate.contains(album)){
+                    albums.add(songs);
+                    duplicate.add(album);
+                }
             }
             cursor.close();
         }

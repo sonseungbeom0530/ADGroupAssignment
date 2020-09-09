@@ -16,16 +16,17 @@ import com.bumptech.glide.Glide;
 import com.example.adgroupassignment.R;
 import com.example.adgroupassignment.Song;
 import com.example.adgroupassignment.activity.AlbumDetails;
+import com.example.adgroupassignment.activity.PlayerActivity;
 
 import java.util.ArrayList;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
+public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapter.MyHolder> {
 
     private Context mContext;
-    private ArrayList<Song> albumFiles;
+    public static ArrayList<Song> albumFiles;
     View view;
 
-    public AlbumAdapter(Context mContext, ArrayList<Song> albumFiles) {
+    public AlbumDetailsAdapter(Context mContext, ArrayList<Song> albumFiles) {
         this.mContext = mContext;
         this.albumFiles = albumFiles;
     }
@@ -33,29 +34,28 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(mContext).inflate(R.layout.album_item, parent, false);
+        view = LayoutInflater.from(mContext).inflate(R.layout.item_song, parent, false);
         return new MyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
-        holder.album_name.setText(albumFiles.get(position).getAlbum());
+        holder.album_name.setText(albumFiles.get(position).getTitle());
         byte[] image = getAlbumArt(albumFiles.get(position).getPath());
         if(image != null){
             Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
         }else{
             Glide.with(mContext).load(R.drawable.empty_albumart).into(holder.album_image);
         }
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, AlbumDetails.class);
-                intent.putExtra("albumName", albumFiles.get(position).getAlbum());
+                Intent intent = new Intent(mContext, PlayerActivity.class);
+                intent.putExtra("sender", "albumDetails");
+                intent.putExtra("position", position);
                 mContext.startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -68,8 +68,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
         TextView album_name;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            album_image = itemView.findViewById(R.id.album_image);
-            album_name = itemView.findViewById(R.id.album_name);
+            album_image = itemView.findViewById(R.id.musicImg);
+            album_name = itemView.findViewById(R.id.tvTitle);
 
         }
     }
