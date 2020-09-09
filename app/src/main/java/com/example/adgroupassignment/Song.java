@@ -11,15 +11,17 @@ public class Song  implements Serializable {
     private String path;
     private String album;
     private String duration;
+    private String id;
 
 
-    public Song(String title, String artist, String path, String album, String duration) {
+    public Song(String title, String artist, String path, String album, String duration,String id) {
 
         this.title = title;
         this.artist = artist;
         this.path = path;
         this.album = album;
         this.duration = duration;
+        this.id = id;
     }
 
     public Song() { }
@@ -62,5 +64,13 @@ public class Song  implements Serializable {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

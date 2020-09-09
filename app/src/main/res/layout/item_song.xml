@@ -24,8 +24,17 @@
         android:text="Song1"
         android:textColor="#fff"
         android:textSize="17sp"
+        android:layout_toStartOf="@+id/menuMore"
         android:textStyle="bold" />
 
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/menuMore"
+        android:background="@drawable/ic_baseline_more_vert_24"
+        android:layout_alignParentEnd="true"
+        android:padding="5dp"
+        />
 <!--    <TextView-->
 <!--        android:id="@+id/tvArtist"-->
 <!--        android:layout_width="wrap_content"-->
