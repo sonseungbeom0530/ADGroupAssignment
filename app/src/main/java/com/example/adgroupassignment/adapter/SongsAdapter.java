@@ -1,4 +1,4 @@
-package com.example.adgroupassignment;
+package com.example.adgroupassignment.adapter;
 
 import android.content.ContentUris;
 import android.content.Context;
@@ -6,26 +6,27 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.adgroupassignment.R;
+import com.example.adgroupassignment.Song;
+import com.example.adgroupassignment.activity.PlayerActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder> {
 
@@ -56,7 +57,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(mContext,PlayerActivity.class);
+                Intent intent=new Intent(mContext, PlayerActivity.class);
                 intent.putExtra("position",position);
                 mContext.startActivity(intent);
             }
@@ -87,6 +88,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
                 Long.parseLong(mFiles.get(position).getId()));
 
         File file=new File(mFiles.get(position).getPath());
+
         boolean deleted=file.delete();
         if (deleted){
             mContext.getContentResolver().delete(contentUri,null,null);
@@ -96,6 +98,9 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
             Snackbar.make(v,"File Deleted : ",Snackbar.LENGTH_LONG)
                     .show();
         }else {
+            Log.e("file : ", file.toString());
+            Log.e("path : ", mFiles.get(position).getPath());
+            Log.e("path : ", contentUri.toString());
             Snackbar.make(v,"Can't Be Deleted : ",Snackbar.LENGTH_LONG)
                     .show();
         }
@@ -127,6 +132,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(uri);
         byte[] art = retriever.getEmbeddedPicture();
+        retriever.release();
         return art;
     }
 

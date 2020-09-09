@@ -1,4 +1,4 @@
-package com.example.adgroupassignment;
+package com.example.adgroupassignment.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,28 +14,25 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.adgroupassignment.fragment.AlbumFragment;
+import com.example.adgroupassignment.R;
+import com.example.adgroupassignment.Song;
+import com.example.adgroupassignment.fragment.SongsFragment;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 1;
-    static ArrayList<Song> musicFiles;
+    public static ArrayList<Song> musicFiles;
     static boolean shuffleBoolean=false, repeatBoolean=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

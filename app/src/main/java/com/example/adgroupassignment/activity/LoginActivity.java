@@ -1,4 +1,4 @@
-package com.example.adgroupassignment;
+package com.example.adgroupassignment.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.adgroupassignment.R;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,11 +23,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     //Declares an instance of FirebaseAuth.
@@ -159,9 +157,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference rootRef = firebaseDatabase.getReference();
 
-        final DatabaseReference userID = rootRef.child("Users").child(mAuth.getUid()); // 유저 아이디 밑
-        Log.e("asdfasdf",mAuth.getUid());
-        Log.e("asdfasdf",userID.child("accountType").toString());
+//        final DatabaseReference userID = rootRef.child("Users").child(mAuth.getUid()); // 유저 아이디 밑
+//        Log.e("asdfasdf",mAuth.getUid());
+//        Log.e("asdfasdf",userID.child("accountType").toString());
 
 
 

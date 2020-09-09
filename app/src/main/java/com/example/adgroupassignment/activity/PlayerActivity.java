@@ -1,4 +1,4 @@
-package com.example.adgroupassignment;
+package com.example.adgroupassignment.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,21 +17,22 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.adgroupassignment.R;
+import com.example.adgroupassignment.Song;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.example.adgroupassignment.MainActivity.musicFiles;
-import static com.example.adgroupassignment.MainActivity.repeatBoolean;
-import static com.example.adgroupassignment.MainActivity.shuffleBoolean;
+import static com.example.adgroupassignment.activity.MainActivity.musicFiles;
+import static com.example.adgroupassignment.activity.MainActivity.repeatBoolean;
+import static com.example.adgroupassignment.activity.MainActivity.shuffleBoolean;
 
 public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 

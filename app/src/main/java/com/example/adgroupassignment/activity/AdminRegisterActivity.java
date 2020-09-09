@@ -1,29 +1,19 @@
-package com.example.adgroupassignment;
+package com.example.adgroupassignment.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adgroupassignment.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -32,8 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 public class AdminRegisterActivity extends AppCompatActivity {
 
@@ -176,7 +164,7 @@ public class AdminRegisterActivity extends AppCompatActivity {
                         //db updated
 
                         progressDialog.dismiss();
-                        startActivity(new Intent(AdminRegisterActivity.this,LoginActivity.class));
+                        startActivity(new Intent(AdminRegisterActivity.this, LoginActivity.class));
                         finish();
 
                     }

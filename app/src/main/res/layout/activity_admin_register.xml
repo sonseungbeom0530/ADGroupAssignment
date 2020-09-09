@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorGray01"
     android:orientation="vertical"
-    tools:context=".AdminRegisterActivity">
+    tools:context=".activity.AdminRegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

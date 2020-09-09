@@ -1,8 +1,10 @@
-package com.example.adgroupassignment;
+package com.example.adgroupassignment.activity;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.adgroupassignment.R;
 
 public class AdminActivity extends AppCompatActivity {
 

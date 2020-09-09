@@ -1,4 +1,4 @@
-package com.example.adgroupassignment;
+package com.example.adgroupassignment.fragment;
 
 import android.os.Bundle;
 
@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import static com.example.adgroupassignment.MainActivity.musicFiles;
+import com.example.adgroupassignment.R;
+import com.example.adgroupassignment.adapter.SongsAdapter;
+
+import static com.example.adgroupassignment.activity.MainActivity.musicFiles;
 
 public class SongsFragment extends Fragment {
 
