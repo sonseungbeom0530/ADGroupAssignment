@@ -1,6 +1,7 @@
 package com.example.adgroupassignment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.tvTitle.setText(mFiles.get(position).getTitle());
         byte[] image = getAlbumArt(mFiles.get(position).getPath());
         if(image != null){
@@ -45,6 +46,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
         }else{
             Glide.with(mContext).load(R.drawable.empty_albumart).into(holder.musicImg);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext,PlayerActivity.class);
+                intent.putExtra("position",position);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

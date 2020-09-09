@@ -16,8 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
-        <activity android:name=".ListMusicActivity"></activity>
+        <activity android:name=".PlayerActivity"></activity>
+        <activity android:name=".ListMusicActivity" />
         <activity android:name=".AdminRegisterActivity" />
         <activity android:name=".UserRegisterActivity" />
         <activity android:name=".LoginActivity">
