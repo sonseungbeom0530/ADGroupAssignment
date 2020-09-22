@@ -41,7 +41,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     TextView song_name,artist_name,duration_played,duration_total;
     ImageView cover_art,nextBtn,prevBtn,backBtn,shuffleBtn,repeatBtn;
     FloatingActionButton playPauseBtn;
-    SeekBar seekBar;
+    SeekBar seekBar,seekBarVolume;
     int position=-1;
     static ArrayList<Song> listSongs=new ArrayList<>();
     static Uri uri;
@@ -54,10 +54,29 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         initViews();
+        mediaPlayer.setVolume(0.5f,0.5f);
         getIntentMethod();
         song_name.setText(listSongs.get(position).getTitle());
         artist_name.setText(listSongs.get(position).getArtist());
         mediaPlayer.setOnCompletionListener(this);
+        seekBarVolume.setProgress(50);
+        seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float volume=progress/100f;
+                mediaPlayer.setVolume(volume,volume);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -378,6 +397,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         repeatBtn=findViewById(R.id.id_repeat);
         playPauseBtn=findViewById(R.id.play_pause);
         seekBar=findViewById(R.id.seekBar);
+        seekBarVolume=findViewById(R.id.seekBarVolume);
 
 
     }
