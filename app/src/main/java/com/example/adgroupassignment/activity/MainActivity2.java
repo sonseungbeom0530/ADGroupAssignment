@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.adgroupassignment.AudioAdapter;
@@ -38,7 +39,6 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
 
     private RecyclerView mRecyclerView;
     private AudioAdapter mAdapter;
-
     private ImageView mImgAlbumArt;
     private TextView mTxtTitle;
     private ImageButton mBtnPlayPause;
@@ -52,7 +52,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         // OS가 Marshmallow 이상일 경우 권한체크를 해야 합니다.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -68,7 +68,7 @@ public class MainActivity2 extends AppCompatActivity implements View.OnClickList
             getAudioListFromMediaDatabase();
         }
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mAdapter = new AudioAdapter(this, null);
         mRecyclerView.setAdapter(mAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
