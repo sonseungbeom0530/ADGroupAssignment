@@ -115,6 +115,17 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="32dp"
             />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/replay_5"
+            android:src="@drawable/ic_baseline_replay_5_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="80dp"
+            />
+
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -143,6 +154,17 @@
             android:layout_toEndOf="@+id/play_pause"
             android:layout_marginStart="16dp"
             />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/forward_5"
+            android:src="@drawable/ic_baseline_forward_5_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="80dp"
+            />
+
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"

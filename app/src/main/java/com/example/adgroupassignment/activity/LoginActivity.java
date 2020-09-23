@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 //                            loaderLayout.setVisibility(View.GONE);
                             if (task.isSuccessful()) {
-                                myStartActivity(MainActivity2.class);
+                                myStartActivity(MainActivity.class);
                                 Toast.makeText(LoginActivity.this,  "Login success", Toast.LENGTH_SHORT).show();
 //                                userID.addListenerForSingleValueEvent(new ValueEventListener() {
 //                                    @Override

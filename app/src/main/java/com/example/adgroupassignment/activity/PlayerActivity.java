@@ -39,7 +39,7 @@ import static com.example.adgroupassignment.adapter.SongsAdapter.mFiles;
 public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 
     TextView song_name,artist_name,duration_played,duration_total;
-    ImageView cover_art,nextBtn,prevBtn,backBtn,shuffleBtn,repeatBtn;
+    private ImageView cover_art,nextBtn,prevBtn,backBtn,shuffleBtn,repeatBtn, replay5, forward5;
     FloatingActionButton playPauseBtn;
     SeekBar seekBar,seekBarVolume;
     int position=-1;
@@ -48,13 +48,17 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     static MediaPlayer mediaPlayer;
     private Handler handler=new Handler();
     private Thread playThread,prevThread,nextThread;
+    private double startTime = 0;
+    private double finalTime = 0;
+    private int forwardTime = 5000;
+    private int backwardTime = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         initViews();
-        mediaPlayer.setVolume(0.5f,0.5f);
+//        mediaPlayer.setVolume(0.5f,0.5f);
         getIntentMethod();
         song_name.setText(listSongs.get(position).getTitle());
         artist_name.setText(listSongs.get(position).getArtist());
@@ -130,6 +134,43 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 }
             }
         });
+
+        //jump forward 5 sec
+        forward5 = findViewById(R.id.forward_5);
+        forward5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalTime = mediaPlayer.getDuration();
+                startTime = mediaPlayer.getCurrentPosition();
+                int temp = (int)startTime;
+
+                if((temp+forwardTime)<=finalTime){
+                    startTime = startTime + forwardTime;
+                    mediaPlayer.seekTo((int)startTime);
+                }else{
+
+                }
+            }
+        });
+
+        //jump backward 5 sec
+        replay5 = findViewById(R.id.replay_5);
+        replay5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalTime = mediaPlayer.getDuration();
+                startTime = mediaPlayer.getCurrentPosition();
+                int temp = (int)startTime;
+
+                if((temp-backwardTime)>0){
+                    startTime = startTime - backwardTime;
+                    mediaPlayer.seekTo((int) startTime);
+                }else{
+
+                }
+            }
+        });
+
     }
 
     @Override
