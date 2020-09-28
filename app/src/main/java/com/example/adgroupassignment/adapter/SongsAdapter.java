@@ -17,9 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.adgroupassignment.BuildConfig;
 import com.example.adgroupassignment.R;
 import com.example.adgroupassignment.Song;
 import com.example.adgroupassignment.activity.PlayerActivity;
@@ -76,6 +78,14 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
                                 Toast.makeText(mContext,"Delete Clicked!",Toast.LENGTH_SHORT).show();
                                 deleteFile(position,v);
                                 break;
+                            case R.id.share:
+                                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                                intent.setType("mp3/*");
+                                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID, new File(mFiles.get(position).getPath())));
+                                Intent chooser = Intent.createChooser(intent, mContext.getString(R.string.hello_blank_fragment));
+                                mContext.startActivity(chooser);
+
                         }
                         return true;
                     }
@@ -100,7 +110,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
         }else {
             Log.e("file : ", file.toString());
             Log.e("path : ", mFiles.get(position).getPath());
-            Log.e("path : ", contentUri.toString());
+            Log.e("uri : ", contentUri.toString());
             Snackbar.make(v,"Can't Be Deleted : ",Snackbar.LENGTH_LONG)
                     .show();
         }
