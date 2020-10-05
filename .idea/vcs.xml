@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/2048-android" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Music-Player" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/MusicApplicationUploadService" vcs="Git" />
   </component>

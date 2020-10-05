@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onQueryTextSubmit(String s) {
         return false;
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 myFiles.add(song);
             }
         }
+        Log.e("Asdf",musicFiles.toString() );
         SongsFragment.songsAdapter.updateList(myFiles);
         return true;
     }

@@ -97,24 +97,28 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
         Uri contentUri= ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 Long.parseLong(mFiles.get(position).getId()));
 
-        File file=new File(mFiles.get(position).getPath());
+        File file = new File(mFiles.get(position).getPath());
 
-        boolean deleted=file.delete();
-        if (deleted){
-            mContext.getContentResolver().delete(contentUri,null,null);
-            mFiles.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position,mFiles.size());
-            Snackbar.make(v,"File Deleted : ",Snackbar.LENGTH_LONG)
-                    .show();
-        }else {
-            Log.e("file : ", file.toString());
-            Log.e("path : ", mFiles.get(position).getPath());
-            Log.e("uri : ", contentUri.toString());
-            Snackbar.make(v,"Can't Be Deleted : ",Snackbar.LENGTH_LONG)
-                    .show();
+//        boolean deleted = file.delete();
+        try{
+            if (file.exists()){
+                file.delete();
+                mContext.getContentResolver().delete(contentUri,null,null);
+                mFiles.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,mFiles.size());
+                Snackbar.make(v,"File Deleted : ",Snackbar.LENGTH_LONG)
+                        .show();
+            }else {
+                Log.e("file : ", file.toString());
+                Log.e("path : ", mFiles.get(position).getPath());
+                Log.e("uri : ", contentUri.toString());
+                Snackbar.make(v,"Can't Be Deleted : ",Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
-
     }
 
     @Override
